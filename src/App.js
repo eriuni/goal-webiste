@@ -1,26 +1,35 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import { Container } from "semantic-ui-react";
+import Header from "./Components/Header";
+import TodayMatches from "./Components/TodayMatches";
+
+import "./App.css";
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = { matches: [] };
+  }
+
+  componentDidMount() {
+    this.UserList();
+  }
+
+  async UserList() {
+    const api_call = await fetch(`http://api.football-data.org/v2/matches`, {
+      headers: { "X-Auth-Token": "dfc3aded84f641048a865569b8480ac4" }
+    });
+    const data = await api_call.json();
+    console.log(data.matches);
+    this.setState({ matches: data.matches });
+  }
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+      <Container className="App">
+        <Header />
+        <TodayMatches matches={this.state.matches} />
+      </Container>
     );
   }
 }

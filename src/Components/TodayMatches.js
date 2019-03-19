@@ -14,16 +14,14 @@ const TodayMatches = props => {
           <Table stackable sortable>
             <Table.Header>
               <Table.Row>
-                <Table.HeaderCell sorted="ascending" textAlign="right">
-                  Home Team
-                </Table.HeaderCell>
+                <Table.HeaderCell textAlign="right">Home Team</Table.HeaderCell>
                 <Table.HeaderCell textAlign="center">Result</Table.HeaderCell>
                 <Table.HeaderCell textAlign="left">Away Team</Table.HeaderCell>
               </Table.Row>
             </Table.Header>
             <Table.Body>
               {props.matches.map((item, i) => {
-                return (
+                return item.matches.length ? (
                   <Table.Row key={item.id}>
                     <Table.Cell textAlign="right">
                       {item.homeTeam.name}
@@ -34,6 +32,8 @@ const TodayMatches = props => {
                     </Table.Cell>
                     <Table.Cell>{item.awayTeam.name}</Table.Cell>
                   </Table.Row>
+                ) : (
+                  "No matches today"
                 );
               })}
             </Table.Body>
